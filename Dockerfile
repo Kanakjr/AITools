@@ -15,5 +15,5 @@ RUN pip3 install -r requirements.txt
 COPY app /app
 WORKDIR /app
 
-EXPOSE 8501
+EXPOSE 8503
 ENTRYPOINT ["python","-m","streamlit", "run", "ui.py", "--server.port=8503", "--server.address=0.0.0.0"]
