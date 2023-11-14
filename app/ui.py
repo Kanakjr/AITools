@@ -70,7 +70,7 @@ def display_generate_image_tab():
         )
 
     # col1.divider()
-    col1.text_area("Image Prompt", value=st.session_state["image_prompt"], height=180)
+    image_prompt = col1.text_area("Image Prompt", value=st.session_state["image_prompt"], height=180)
     image_model = col1.selectbox("Select Model",image_model_options)
     imgcol1,imgcol2 = col1.columns([1,2])
     image_quality = imgcol1.radio("Image Quality",["standard",'hd'],horizontal=True)
@@ -78,11 +78,11 @@ def display_generate_image_tab():
 
     if col1.button("Generate Image >>", use_container_width=True):
         if (
-            st.session_state["image_prompt"]
-            and len(st.session_state["image_prompt"]) > 10
+            image_prompt
+            and image_prompt > 10
         ):
             image_url = generate_image_from_text(
-                image_prompt=st.session_state["image_prompt"],
+                image_prompt=image_prompt,
                 model=image_model,
                 size=image_size,
                 quality=image_quality
