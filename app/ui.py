@@ -79,7 +79,7 @@ def display_generate_image_tab():
     if col1.button("Generate Image >>", use_container_width=True):
         if (
             image_prompt
-            and image_prompt > 10
+            and len(image_prompt) > 10
         ):
             image_url = generate_image_from_text(
                 image_prompt=image_prompt,
