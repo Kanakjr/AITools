@@ -1,0 +1,26 @@
+name: Docker Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: SSH into server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USERNAME }}
+        password: ${{ secrets.SERVER_SSH_PASSWORD }}
+        port: 22
+        script: |
+          cd /home/ubuntu/Workspace/github/AITools
+          git pull origin main
+          docker system prune -f
+          docker build -f "Dockerfile" -t aitools:latest .
+          docker stop aitools || true
+          sleep 5
+          docker run --rm -d -p 8501:8501/tcp --name aitools aitools
